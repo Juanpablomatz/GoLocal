@@ -1,7 +1,0 @@
-{
-  "name": "GoLocal",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
