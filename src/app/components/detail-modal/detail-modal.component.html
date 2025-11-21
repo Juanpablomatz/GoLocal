@@ -1,0 +1,40 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <!-- Botón de cerrar (X) -->
+      <ion-button (click)="close()">
+        <ion-icon name="close" style="font-size: 1.5rem; color: var(--charcoal);"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+  <!-- Imagen Principal -->
+  <div class="modal-media" *ngIf="data">
+    <img [src]="data.img" [alt]="data.title" />
+  </div>
+  
+  <!-- Información -->
+  <div class="modal-body" *ngIf="data">
+    <h2>{{ data.title }}</h2>
+    <p class="description">{{ data.text }}</p>
+    
+    <div class="extra-info">
+      <p class="small">{{ data.extra }}</p>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <div class="actions">
+      <ion-button expand="block" class="google-btn" [href]="data?.link" target="_blank">
+        Abrir en Google
+      </ion-button>
+      <ion-button expand="block" fill="outline" color="medium" (click)="close()">
+        Cerrar
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

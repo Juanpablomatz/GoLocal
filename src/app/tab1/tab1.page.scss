@@ -1,0 +1,124 @@
+/* --- HEADER COMPACTO (Versión Corregida) --- */
+ion-toolbar {
+  --background: rgba(255, 255, 255, 0.95);
+  --min-height: 60px; /* Altura fija de la barra blanca (ni muy grande ni muy chica) */
+  --border-width: 0;  /* Quita líneas feas */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombrita suave */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 8px;
+  padding-left: 5px;
+
+  /* CONTROL TOTAL DE LA IMAGEN */
+  .main-logo {
+    height: 45px;       /* Altura fija: no pasará de aquí */
+    width: auto;        /* El ancho se ajusta solo */
+    max-width: 80px;    /* Por seguridad, que no sea ancha */
+    object-fit: contain;/* Hace que la imagen quepa entera sin estirarse */
+  }
+
+  .text { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    line-height: 1.1;
+  }
+  
+  .brand { 
+    font-weight: 800; 
+    font-family: var(--font-header); 
+    color: #333; 
+    font-size: 1rem; 
+    text-transform: uppercase; 
+  }
+  
+  .sub { 
+    font-size: 0.6rem; 
+    color: var(--pm-pink); 
+    font-weight: 700; 
+    letter-spacing: 0.5px; 
+  }
+}
+/* --- HERO SECTION --- */
+.hero {
+  background-image: url("https://source.unsplash.com/1600x900/?mexico,town,colorful");
+  background-size: cover;
+  background-position: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+  position: relative;
+  margin-bottom: 20px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  /* Degradado con los colores mágicos pero transparente */
+  background: linear-gradient(135deg, rgba(228, 0, 124, 0.3), rgba(0, 149, 218, 0.3));
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  h1 { font-family: var(--font-header); font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+  p { font-size: 1rem; margin-bottom: 25px; text-shadow: 0 1px 4px rgba(0,0,0,0.6); font-weight: 600;}
+}
+
+.custom-search {
+  --background: #ffffff;
+  --border-radius: 50px;
+  --box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* --- TARJETAS DE COLORES (Estilo Pueblos Mágicos) --- */
+.main-container { padding: 10px; }
+.main-content { --background: var(--bg-off); }
+
+.cat-card {
+  border-radius: 20px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 120px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
+  
+  &:active { transform: scale(0.95); }
+
+  .emoji { font-size: 2.2rem; margin-bottom: 5px; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+  .cat-title { font-weight: 700; font-size: 0.9rem; }
+}
+
+/* --- ASIGNACIÓN DE COLORES DEL LOGO A LAS CATEGORÍAS --- */
+/* Comida -> Naranja/Rojo */
+.c-food, .c-eat, .c-sweet, .c-market, .c-bread, .c-pizza { 
+  background: linear-gradient(135deg, var(--pm-orange), var(--pm-red)); 
+}
+
+/* Naturaleza/Agua -> Verde/Azul */
+.c-nature, .c-water, .c-waterfall { 
+  background: linear-gradient(135deg, var(--pm-green), var(--pm-blue)); 
+}
+
+/* Hospedaje -> Morado/Rosa */
+.c-stay, .c-hotel, .c-cabin { 
+  background: linear-gradient(135deg, var(--pm-purple), var(--pm-pink)); 
+}
+
+/* Cultura/Historia -> Rosa/Rojo */
+.c-fun, .c-place, .c-museum, .c-history { 
+  background: linear-gradient(135deg, var(--pm-pink), var(--pm-orange)); 
+}

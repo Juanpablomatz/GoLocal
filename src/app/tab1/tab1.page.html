@@ -1,16 +1,51 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
-      bien venido a GoLocal    </ion-title>
+    <!-- AQUÍ ESTÁ LA CORRECCIÓN: class="logo-container" (sin assets\) -->
+    <div class="logo-container" slot="start">
+      <img src="assets/logo.jpeg" alt="Pueblos Mágicos" class="main-logo">
+      <div class="text">
+        <span class="brand">Calvillo</span>
+        <span class="sub">Pueblo Mágico</span>
+      </div>
+    </div>
+    <ion-buttons slot="end">
+      <!-- Botón Idioma -->
+      <ion-button (click)="toggleLang()">
+        <ion-icon name="language-outline" style="font-size: 1.5rem; color: #333;"></ion-icon>
+      </ion-button>
+
+      <!-- Botón Modo Oscuro (Nuevo) -->
+      <ion-button (click)="toggleDark()">
+        <!-- Cambia el icono si es de día o de noche -->
+        <ion-icon [name]="darkMode ? 'sunny-outline' : 'moon-outline'" style="font-size: 1.5rem; color: #333;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="main-content">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>{{ texts?.heroTitle }}</h1>
+      <p>{{ texts?.heroDesc }}</p>
+      <ion-searchbar [placeholder]="texts?.searchPlaceholder" class="custom-search"></ion-searchbar>
+    </div>
+  </div>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <!-- MENU GRID -->
+  <div class="main-container">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="4" *ngFor="let cat of catList">
+          <div class="cat-card {{cat.style}}" (click)="openModal(cat.key)">
+            <span class="emoji">{{ cat.icon }}</span>
+            <div class="cat-title">{{ texts[cat.key]?.title || cat.key }}</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
