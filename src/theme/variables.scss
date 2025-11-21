@@ -1,2 +1,73 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+/* =============================================
+   COLORES PERSONALIZADOS (GoLocal Calvillo)
+   ============================================= */
+
+:root {
+  /* Paleta Original (Modo Claro) */
+  --cream: #F8F5F2;
+  --stone: #E5E3DF;
+  --sage: #A3B2A0;
+  --charcoal: #313131;
+  --accent: #F7A072;
+  --glass: rgba(255, 255, 255, 0.65);
+  --card-bg: #FFFFFF;
+  
+  /* Fuentes (Importadas en index.html, definidas aquí) */
+  --font-main: 'Lato', sans-serif;
+  --font-header: 'Montserrat', sans-serif;
+}
+
+/* =============================================
+   CONFIGURACIÓN MODO OSCURO
+   ============================================= */
+/* Esto se activa cuando agregamos la clase .dark al body */
+body.dark {
+  /* Paleta Original (Modo Oscuro) */
+  --cream: #1e1e1e;
+  --stone: #2b2b2b;
+  --sage: #7b9a86;
+  --charcoal: #eaeaea;
+  --glass: rgba(20, 20, 20, 0.6);
+  --card-bg: #111111;
+
+  /* Sobrescribir variables nativas de Ionic para que todo el fondo cambie */
+  --ion-background-color: #111111;
+  --ion-text-color: #eaeaea;
+  --ion-item-background: #1e1e1e;
+  --ion-card-background: #111111;
+}
+/* =============================================
+   COLORES TEMA "PUEBLOS MÁGICOS"
+   ============================================= */
+
+:root {
+  /* Colores extraídos del Logo */
+  --pm-pink:   #E4007C; /* Rosa mexicano */
+  --pm-purple: #92278F; /* Morado */
+  --pm-blue:   #0095DA; /* Azul celeste */
+  --pm-green:  #50B848; /* Verde */
+  --pm-orange: #F58220; /* Naranja */
+  --pm-red:    #E30613; /* Rojo */
+  
+  /* Fondos neutros para que resalten los colores */
+  --bg-light:  #ffffff;
+  --bg-off:    #f4f4f4;
+  --text-main: #333333;
+
+  /* Fuentes */
+  --font-main: 'Lato', sans-serif;
+  --font-header: 'Montserrat', sans-serif;
+}
+
+/* Modo Oscuro */
+body.dark {
+  --bg-light:  #121212;
+  --bg-off:    #1e1e1e;
+  --text-main: #ffffff;
+  
+  --ion-background-color: #121212;
+  --ion-text-color: #ffffff;
+  --ion-item-background: #1e1e1e;
+}
