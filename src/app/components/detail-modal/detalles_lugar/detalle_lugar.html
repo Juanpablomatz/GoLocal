@@ -1,0 +1,61 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Detalles</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="info-container">
+    <img [src]="lugar?.foto" style="width: 100%; border-radius: 12px; height: 200px; object-fit: cover; margin-bottom: 15px;">
+    
+    <h1>{{ lugar?.nombre }}</h1>
+    
+    <p style="color: gray; margin-top: 5px;">
+      <ion-icon name="location-outline"></ion-icon> {{ lugar?.direccion }}
+    </p>
+
+    <p style="margin-top: 15px; font-size: 1.1rem;">
+      {{ lugar?.descripcion }}
+    </p>
+
+    <ion-button expand="block" fill="outline" class="ion-margin-top" (click)="irAlMapa()">
+      <ion-icon name="map" slot="start"></ion-icon>
+      Ver Ubicación
+    </ion-button>
+  </div>
+
+  <hr style="margin: 30px 0; border-top: 1px solid #ddd;">
+
+  <div class="resena-container">
+    <h3>¿Qué te pareció este lugar?</h3>
+    <p style="font-size: 0.9rem; color: #666;">Deja tu calificación y opinión.</p>
+
+    <div style="display: flex; gap: 10px; margin: 15px 0; font-size: 2rem;">
+      <ion-icon 
+        *ngFor="let num of arrayEstrellas" 
+        [name]="num <= ratingUsuario ? 'star' : 'star-outline'"
+        [color]="num <= ratingUsuario ? 'warning' : 'medium'"
+        (click)="seleccionarEstrella(num)"
+        style="cursor: pointer;">
+      </ion-icon>
+    </div>
+
+    <ion-item style="border: 1px solid #ccc; border-radius: 8px; --padding-start: 10px;">
+      <ion-textarea 
+        placeholder="Escribe tu experiencia aquí..." 
+        [(ngModel)]="comentarioUsuario"
+        rows="4">
+      </ion-textarea>
+    </ion-item>
+
+    <ion-button expand="block" color="primary" class="ion-margin-top" (click)="enviarResena()" [disabled]="ratingUsuario === 0">
+      Enviar Reseña
+    </ion-button>
+
+  </div>
+
+</ion-content>
