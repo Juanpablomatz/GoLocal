@@ -1,0 +1,80 @@
+<ion-content class="register-content">
+  <div class="bg-overlay"></div>
+
+  <div class="register-container">
+    <div class="card-register">
+      
+      <div class="header">
+        <h2>Crear Perfil</h2>
+        <p>Cuéntanos de ti para recomendarte lo mejor</p>
+      </div>
+
+      <div class="form-scroll">
+        
+        <!-- SECCIÓN 1: DATOS PERSONALES -->
+        <div class="section-title">Datos Personales</div>
+
+        <!-- Nombre -->
+        <div class="input-group">
+          <ion-icon name="person-outline"></ion-icon>
+          <ion-input placeholder="Nombre(s)" type="text"></ion-input>
+        </div>
+
+        <!-- Apellidos -->
+        <div class="input-group">
+          <ion-icon name="people-outline"></ion-icon>
+          <ion-input placeholder="Apellidos" type="text"></ion-input>
+        </div>
+
+        <!-- Edad y Teléfono (En una misma fila) -->
+        <div class="row-group">
+          <div class="input-group half">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-input placeholder="Edad" type="number"></ion-input>
+          </div>
+          <div class="input-group half">
+            <ion-icon name="call-outline"></ion-icon>
+            <ion-input placeholder="Teléfono" type="tel"></ion-input>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 2: CUENTA -->
+        <div class="section-title">Tu Cuenta</div>
+
+        <div class="input-group">
+          <ion-icon name="mail-outline"></ion-icon>
+          <ion-input placeholder="Correo electrónico" type="email"></ion-input>
+        </div>
+
+        <div class="input-group">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <ion-input placeholder="Contraseña" type="password"></ion-input>
+        </div>
+
+        <!-- SECCIÓN 3: INTERESES -->
+        <div class="section-title">¿Qué te gusta?</div>
+        <p class="small-desc">Selecciona tus temas favoritos:</p>
+
+        <div class="interests-grid">
+          <div 
+            class="chip" 
+            *ngFor="let tema of intereses; let i = index"
+            [class.active]="tema.seleccionado"
+            (click)="toggleInteres(i)">
+            {{ tema.nombre }}
+          </div>
+        </div>
+
+        <!-- Botón Registro -->
+        <ion-button expand="block" class="register-btn" routerLink="/tabs/tab1">
+          ¡LISTO! CREAR CUENTA
+        </ion-button>
+
+      </div>
+
+      <div class="footer">
+        ¿Ya tienes cuenta? <strong routerLink="/login">Inicia Sesión</strong>
+      </div>
+    </div>
+  </div>
+</ion-content>

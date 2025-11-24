@@ -1,0 +1,106 @@
+.register-content { --background: white; }
+
+.bg-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--pm-orange), var(--pm-red));
+  z-index: 0;
+}
+
+.register-container {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  height: 100%; padding: 20px;
+}
+
+.card-register {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 25px;
+  padding: 25px 20px;
+  width: 100%; max-width: 420px;
+  height: 85vh; /* Altura máxima */
+  display: flex; flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* Permitir scroll dentro de la tarjeta si hay muchos campos */
+.form-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px; /* Espacio para scrollbar */
+}
+
+.header {
+  text-align: center; margin-bottom: 15px;
+  h2 { font-family: var(--font-header); font-weight: 800; color: #333; margin: 0; font-size: 1.5rem; }
+  p { color: #666; margin: 0; font-size: 0.85rem; }
+}
+
+.section-title {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  color: var(--pm-orange); margin: 15px 0 8px; letter-spacing: 1px; text-align: left;
+}
+
+.input-group {
+  background: #f4f4f4; 
+  border-radius: 12px;
+  display: flex; 
+  align-items: center; 
+  padding: 0 15px;
+  margin-bottom: 10px; 
+  height: 45px;
+  border: 1px solid transparent;
+  
+  &:focus-within { 
+    background: white; 
+    border-color: var(--pm-orange); 
+  }
+
+  ion-icon { 
+    color: #999; 
+    margin-right: 8px; 
+  }
+
+  /* AQUÍ ESTÁ EL ARREGLO DEL COLOR */
+  ion-input { 
+    --padding-start: 0; 
+    font-size: 0.9rem;
+    --color: #000000 !important; /* <--- ¡NEGRO OBLIGATORIO! */
+    --placeholder-color: #666666;
+    color: #000000; /* Respaldo para navegadores web */
+  }
+}
+
+
+
+.row-group { display: flex; gap: 10px; }
+.half { flex: 1; }
+
+/* ESTILOS DE INTERESES (CHIPS) */
+.small-desc { font-size: 0.8rem; color: #666; margin-bottom: 8px; text-align: left; }
+
+.interests-grid {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+}
+
+.chip {
+  padding: 8px 12px;
+  background: #eee;
+  border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600; color: #555;
+  cursor: pointer; transition: 0.2s; border: 1px solid transparent;
+  
+  &.active {
+    background: var(--pm-orange);
+    color: white;
+    box-shadow: 0 4px 10px rgba(245, 130, 32, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+.register-btn {
+  --background: linear-gradient(90deg, var(--pm-orange), var(--pm-red));
+  --border-radius: 50px; height: 50px; font-weight: 800; margin-top: 10px;
+}
+
+.footer { margin-top: 10px; font-size: 0.85rem; color: #666; }
+strong { color: var(--pm-blue); }
