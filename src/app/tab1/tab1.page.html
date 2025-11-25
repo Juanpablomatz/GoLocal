@@ -1,51 +1,68 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <!-- AQUÍ ESTÁ LA CORRECCIÓN: class="logo-container" (sin assets\) -->
+    
+    <!-- IZQUIERDA: LOGO FIJO (Siempre es el mismo) -->
     <div class="logo-container" slot="start">
-      <img src="assets/logo.jpeg" alt="Pueblos Mágicos" class="main-logo">
+      <img [src]="logoPrincipal" alt="Logo Calvillo" class="main-logo">
       <div class="text">
         <span class="brand">Calvillo</span>
         <span class="sub">Pueblo Mágico</span>
       </div>
     </div>
+
+    <!-- DERECHA: BOTONES -->
     <ion-buttons slot="end">
+      
       <!-- Botón Idioma -->
-      <ion-button (click)="toggleLang()">
-        <ion-icon name="language-outline" style="font-size: 1.5rem; color: #333;"></ion-icon>
+      <ion-button (click)="showLanguageMenu()" class="btn-lang">
+        <ion-icon name="globe-outline" style="margin-right: 5px;"></ion-icon>
+        IDIOMA ▾
       </ion-button>
 
-      <!-- Botón Modo Oscuro (Nuevo) -->
-      <ion-button (click)="toggleDark()">
-        <!-- Cambia el icono si es de día o de noche -->
-        <ion-icon [name]="darkMode ? 'sunny-outline' : 'moon-outline'" style="font-size: 1.5rem; color: #333;"></ion-icon>
+      <!-- BOTÓN CAMBIO DE TEMA (Con Imágenes Día/Noche) -->
+      <ion-button (click)="toggleDark()" class="btn-mode-img">
+        <!-- 
+           Si es DarkMode (true) -> Muestra botonNoche
+           Si es LightMode (false) -> Muestra botonDia
+        -->
+        <img [src]="darkMode ? botonNoche : botonDia" alt="Tema">
       </ion-button>
+
     </ion-buttons>
-    
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="main-content">
-  <!-- HERO -->
+  
+  <!-- SECCIÓN HERO (Imagen de fondo y Título) -->
   <div class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>{{ texts?.heroTitle }}</h1>
       <p>{{ texts?.heroDesc }}</p>
+      
+      <!-- Barra de búsqueda -->
       <ion-searchbar [placeholder]="texts?.searchPlaceholder" class="custom-search"></ion-searchbar>
     </div>
   </div>
 
-  <!-- MENU GRID -->
+  <!-- GRID DE CATEGORÍAS (Botones de colores) -->
   <div class="main-container">
     <ion-grid>
       <ion-row>
+        <!-- Generamos los botones automáticamente con la lista -->
         <ion-col size="6" size-md="4" *ngFor="let cat of catList">
+          
+          <!-- Al hacer clic, abre la LISTA de lugares -->
           <div class="cat-card {{cat.style}}" (click)="openModal(cat.key)">
             <span class="emoji">{{ cat.icon }}</span>
-            <div class="cat-title">{{ texts[cat.key]?.title || cat.key }}</div>
+            <div class="cat-title">{{ texts[cat.key]?.title || cat.key | titlecase }}</div>
           </div>
+
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
+
 </ion-content>

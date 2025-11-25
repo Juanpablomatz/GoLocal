@@ -1,124 +1,239 @@
-/* --- HEADER COMPACTO (Versión Corregida) --- */
+/* =========================================
+   1. HEADER Y BARRA SUPERIOR
+   ========================================= */
+
 ion-toolbar {
-  --background: rgba(255, 255, 255, 0.95);
-  --min-height: 60px; /* Altura fija de la barra blanca (ni muy grande ni muy chica) */
-  --border-width: 0;  /* Quita líneas feas */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombrita suave */
+  --background: rgba(255, 255, 255, 0.98);
+  --min-height: 65px;
+  --border-width: 0; /* Quita la línea gris fea */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: --background 0.3s ease; /* Suaviza el cambio de color día/noche */
+}
+
+/* Ajuste automático cuando se activa el MODO OSCURO */
+:host-context(body.dark) ion-toolbar {
+  --background: #121212; /* Fondo negro profundo */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 .logo-container {
   display: flex;
   align-items: center;
-  height: 100%;
-  gap: 8px;
+  gap: 10px;
   padding-left: 5px;
+  height: 100%;
 
-  /* CONTROL TOTAL DE LA IMAGEN */
   .main-logo {
-    height: 45px;       /* Altura fija: no pasará de aquí */
-    width: auto;        /* El ancho se ajusta solo */
-    max-width: 80px;    /* Por seguridad, que no sea ancha */
-    object-fit: contain;/* Hace que la imagen quepa entera sin estirarse */
+    height: 40px; /* Tamaño controlado del logo fijo */
+    width: auto;
+    object-fit: contain;
   }
 
-  .text { 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
+  .text {
+    display: flex;
+    flex-direction: column;
     line-height: 1.1;
   }
-  
-  .brand { 
-    font-weight: 800; 
-    font-family: var(--font-header); 
-    color: #333; 
-    font-size: 1rem; 
-    text-transform: uppercase; 
+
+  .brand {
+    font-weight: 800;
+    font-family: var(--font-header);
+    color: #333; /* Color negro en día */
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
-  
-  .sub { 
-    font-size: 0.6rem; 
-    color: var(--pm-pink); 
-    font-weight: 700; 
-    letter-spacing: 0.5px; 
+
+  .sub {
+    font-size: 0.65rem;
+    color: var(--pm-pink); /* Rosa mexicano */
+    font-weight: 700;
+    text-transform: uppercase;
   }
 }
-/* --- HERO SECTION --- */
+
+/* Texto blanco en la marca cuando es de noche */
+:host-context(body.dark) .brand { color: white; }
+
+
+/* =========================================
+   2. BOTONES DEL HEADER (Idioma y Modo)
+   ========================================= */
+
+.btn-lang {
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: var(--pm-blue);
+  background: rgba(0, 149, 218, 0.1); /* Fondo azulito suave */
+  border-radius: 15px;
+  height: 34px;
+  margin-right: 8px;
+  --box-shadow: none;
+  --padding-start: 10px;
+  --padding-end: 10px;
+}
+
+/* ESTILO NUEVO PARA EL BOTÓN CON FOTO (DÍA/NOCHE) */
+.btn-mode-img {
+  --padding-start: 0;
+  --padding-end: 0;
+  height: 40px;
+  width: 40px;
+  margin-left: 5px;
+  --border-radius: 50%; /* Botón redondo */
+
+  img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%; /* Imagen redonda */
+    object-fit: cover;
+    border: 2px solid var(--pm-pink); /* Borde rosa bonito */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+  }
+
+  /* Efecto al presionar */
+  &:active img {
+    transform: scale(0.9);
+  }
+}
+
+
+/* =========================================
+   3. SECCIÓN HERO (Imagen Principal)
+   ========================================= */
+
 .hero {
+  /* Imagen de fondo */
   background-image: url("https://source.unsplash.com/1600x900/?mexico,town,colorful");
   background-size: cover;
   background-position: center;
-  padding: 60px 20px;
+  padding: 50px 20px 70px; /* Espacio extra abajo para que quepa la barra de búsqueda */
   text-align: center;
   color: white;
   position: relative;
-  margin-bottom: 20px;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
   overflow: hidden;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .hero-overlay {
   position: absolute; inset: 0;
-  /* Degradado con los colores mágicos pero transparente */
-  background: linear-gradient(135deg, rgba(228, 0, 124, 0.3), rgba(0, 149, 218, 0.3));
+  /* Degradado mágico semitransparente sobre la foto */
+  background: linear-gradient(135deg, rgba(228, 0, 124, 0.45), rgba(0, 149, 218, 0.45));
+  z-index: 1;
 }
 
 .hero-content {
   position: relative; z-index: 2;
-  h1 { font-family: var(--font-header); font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-  p { font-size: 1rem; margin-bottom: 25px; text-shadow: 0 1px 4px rgba(0,0,0,0.6); font-weight: 600;}
+  
+  h1 {
+    font-family: var(--font-header);
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    line-height: 1.2;
+  }
+  
+  p {
+    font-size: 1rem;
+    margin-bottom: 25px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    font-weight: 600;
+    max-width: 600px;
+    margin-left: auto; margin-right: auto;
+    opacity: 0.95;
+  }
 }
 
 .custom-search {
   --background: #ffffff;
   --border-radius: 50px;
-  --box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  --box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  --placeholder-color: #666;
+  --icon-color: var(--pm-pink);
   max-width: 500px;
   margin: 0 auto;
+  opacity: 0.98;
+  padding-bottom: 0;
 }
 
-/* --- TARJETAS DE COLORES (Estilo Pueblos Mágicos) --- */
-.main-container { padding: 10px; }
-.main-content { --background: var(--bg-off); }
+
+/* =========================================
+   4. TARJETAS DE CATEGORÍAS (Grid)
+   ========================================= */
+
+.main-container {
+  padding: 0 15px 40px;
+}
 
 .cat-card {
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 120px;
+  min-height: 130px;
   color: white;
   cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-  transition: transform 0.2s;
-  
-  &:active { transform: scale(0.95); }
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
 
-  .emoji { font-size: 2.2rem; margin-bottom: 5px; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-  .cat-title { font-weight: 700; font-size: 0.9rem; }
+  /* Efecto de presionar botón */
+  &:active { transform: scale(0.95); }
+  
+  .emoji {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 3px 5px rgba(0,0,0,0.25));
+    transition: transform 0.2s;
+  }
+
+  .cat-title {
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
 }
 
-/* --- ASIGNACIÓN DE COLORES DEL LOGO A LAS CATEGORÍAS --- */
-/* Comida -> Naranja/Rojo */
-.c-food, .c-eat, .c-sweet, .c-market, .c-bread, .c-pizza { 
+/* =========================================
+   5. PALETA DE COLORES (Degradados)
+   ========================================= */
+
+/* Comida -> Naranja a Rojo */
+.c-food, .c-eat, .c-market, .c-bread, .c-pizza { 
   background: linear-gradient(135deg, var(--pm-orange), var(--pm-red)); 
 }
 
-/* Naturaleza/Agua -> Verde/Azul */
+/* Naturaleza -> Verde a Azul */
 .c-nature, .c-water, .c-waterfall { 
   background: linear-gradient(135deg, var(--pm-green), var(--pm-blue)); 
 }
 
-/* Hospedaje -> Morado/Rosa */
+/* Hospedaje -> Morado a Rosa */
 .c-stay, .c-hotel, .c-cabin { 
   background: linear-gradient(135deg, var(--pm-purple), var(--pm-pink)); 
 }
 
-/* Cultura/Historia -> Rosa/Rojo */
+/* Cultura -> Rosa a Naranja */
 .c-fun, .c-place, .c-museum, .c-history { 
   background: linear-gradient(135deg, var(--pm-pink), var(--pm-orange)); 
+}
+
+/* Dulces -> Pastel */
+.c-sweet {
+  background: linear-gradient(135deg, #FF9A9E, #FECFEF);
+  color: #444; 
+  .emoji { filter: none; }
+  .cat-title { text-shadow: none; font-weight: 900; color: #d6336c; }
 }

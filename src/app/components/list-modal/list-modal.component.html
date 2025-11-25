@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ categoryTitle }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="list-content">
+  <!-- Si la lista está vacía -->
+  <div *ngIf="items.length === 0" class="empty-state">
+    <p>Próximamente agregaremos lugares aquí.</p>
+  </div>
+
+  <!-- Lista de Negocios -->
+  <ion-list lines="none">
+    <ion-item *ngFor="let place of items" (click)="openDetail(place)" class="place-item" detail="true">
+      
+      <!-- Foto pequeña del lugar -->
+      <ion-thumbnail slot="start">
+        <img [src]="place.img" onerror="this.src='assets/icon/favicon.png'" />
+      </ion-thumbnail>
+      
+      <ion-label>
+        <h2>{{ place.title }}</h2>
+        <p>{{ place.desc }}</p>
+        <p class="location-text">📍 {{ place.extra }}</p>
+      </ion-label>
+      
+    </ion-item>
+  </ion-list>
+</ion-content>

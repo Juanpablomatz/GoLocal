@@ -1,84 +1,77 @@
+/* Header flotante transparente */
 ion-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-  background: transparent;
-  
-  ion-toolbar {
-    --background: transparent;
-  }
-  
-  ion-button {
-    background: rgba(255,255,255,0.8);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    margin-top: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
+  position: absolute; top: 0; left: 0; width: 100%; z-index: 10;
+  ion-toolbar { --background: transparent; }
 }
 
 .modal-media {
-  width: 100%;
-  height: 240px;
+  position: relative; width: 100%; height: 300px;
   
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  img { width: 100%; height: 100%; object-fit: cover; }
+  
+  .overlay-gradient {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 150px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  }
+
+  .hero-title {
+    position: absolute; bottom: 20px; left: 20px; right: 20px;
+    margin: 0; color: white; font-family: var(--font-header);
+    font-size: 1.8rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   }
 }
 
 .modal-body {
-  padding: 20px;
-  background: var(--card-bg); /* Usa la variable que definimos */
-  color: var(--charcoal);
-  
-  h2 {
-    margin: 0 0 10px 0;
-    font-family: var(--font-header);
-    font-weight: 700;
-    font-size: 1.5rem;
-  }
-  
-  .description {
-    font-family: var(--font-main);
-    line-height: 1.5;
-    color: var(--charcoal);
-    opacity: 0.9;
-    font-size: 1rem;
-  }
+  padding: 20px; background: white; min-height: 100%;
+}
+
+.info-card {
+  .description { font-size: 1rem; color: #444; line-height: 1.5; margin-bottom: 15px; }
   
   .extra-info {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(0,0,0,0.1);
-    
-    .small {
-      font-size: 0.9rem;
-      color: #666;
-      font-style: italic;
-    }
+    display: flex; gap: 10px; align-items: start;
+    background: #f9f9f9; padding: 10px; border-radius: 10px;
+    ion-icon { color: var(--pm-orange); font-size: 1.2rem; margin-top: 2px; }
+    .small { margin: 0; font-size: 0.9rem; color: #666; }
   }
 }
 
-ion-footer {
-  padding: 10px;
-  background: var(--card-bg);
-  
-  .actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .google-btn {
-    --background: var(--sage);
-    --color: white;
-    font-weight: 700;
-  }
+.divider { margin: 25px 0; border: 0; border-top: 1px solid #eee; }
+
+/* SECCIÓN DE RESEÑAS */
+.reviews-section {
+  h3 { font-size: 1.2rem; font-weight: 700; color: #333; margin-bottom: 15px; }
 }
+
+.add-review-box {
+  background: #fff; border: 1px solid #eee; border-radius: 15px;
+  padding: 15px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+  p { margin: 0 0 10px; font-size: 0.9rem; font-weight: 600; color: #555; }
+
+  .stars-input {
+    display: flex; gap: 5px; margin-bottom: 15px;
+    .star-btn { font-size: 2rem; color: #FFC107; cursor: pointer; transition: transform 0.2s; }
+    .star-btn:active { transform: scale(1.2); }
+  }
+
+  .custom-textarea {
+    --background: #f5f5f5; --padding-start: 10px; border-radius: 10px; margin-bottom: 10px;
+  }
+
+  .publish-btn { --background: var(--pm-blue); --border-radius: 20px; font-weight: 700; }
+}
+
+.review-item {
+  border-bottom: 1px solid #f0f0f0; padding: 15px 0;
+  
+  .review-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;
+    .user-name { font-weight: 700; font-size: 0.95rem; color: #333; }
+    .yellow-star { color: #FFC107; font-size: 0.9rem; }
+  }
+  
+  .review-text { margin: 0; color: #666; font-size: 0.9rem; font-style: italic; }
+}
+
+.no-reviews { text-align: center; color: #999; padding: 20px; font-style: italic; }

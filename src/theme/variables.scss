@@ -1,73 +1,133 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
 /* =============================================
-   COLORES PERSONALIZADOS (GoLocal Calvillo)
+   TEMA GLOBAL GOLOCAL (Pueblos Mágicos)
    ============================================= */
 
+/* 1. CONFIGURACIÓN BASE (MODO CLARO) */
 :root {
-  /* Paleta Original (Modo Claro) */
-  --cream: #F8F5F2;
-  --stone: #E5E3DF;
-  --sage: #A3B2A0;
-  --charcoal: #313131;
-  --accent: #F7A072;
-  --glass: rgba(255, 255, 255, 0.65);
-  --card-bg: #FFFFFF;
-  
-  /* Fuentes (Importadas en index.html, definidas aquí) */
-  --font-main: 'Lato', sans-serif;
-  --font-header: 'Montserrat', sans-serif;
-}
-
-/* =============================================
-   CONFIGURACIÓN MODO OSCURO
-   ============================================= */
-/* Esto se activa cuando agregamos la clase .dark al body */
-body.dark {
-  /* Paleta Original (Modo Oscuro) */
-  --cream: #1e1e1e;
-  --stone: #2b2b2b;
-  --sage: #7b9a86;
-  --charcoal: #eaeaea;
-  --glass: rgba(20, 20, 20, 0.6);
-  --card-bg: #111111;
-
-  /* Sobrescribir variables nativas de Ionic para que todo el fondo cambie */
-  --ion-background-color: #111111;
-  --ion-text-color: #eaeaea;
-  --ion-item-background: #1e1e1e;
-  --ion-card-background: #111111;
-}
-/* =============================================
-   COLORES TEMA "PUEBLOS MÁGICOS"
-   ============================================= */
-
-:root {
-  /* Colores extraídos del Logo */
-  --pm-pink:   #E4007C; /* Rosa mexicano */
-  --pm-purple: #92278F; /* Morado */
-  --pm-blue:   #0095DA; /* Azul celeste */
-  --pm-green:  #50B848; /* Verde */
-  --pm-orange: #F58220; /* Naranja */
-  --pm-red:    #E30613; /* Rojo */
-  
-  /* Fondos neutros para que resalten los colores */
-  --bg-light:  #ffffff;
-  --bg-off:    #f4f4f4;
-  --text-main: #333333;
+  /* --- TUS COLORES PERSONALIZADOS --- */
+  --pm-pink:   #E4007C;
+  --pm-purple: #92278F;
+  --pm-blue:   #0095DA;
+  --pm-green:  #50B848;
+  --pm-orange: #F58220;
+  --pm-red:    #E30613;
 
   /* Fuentes */
   --font-main: 'Lato', sans-serif;
   --font-header: 'Montserrat', sans-serif;
+
+  /* --- COLORES DEL SISTEMA IONIC --- */
+  
+  /* Primary: Usaremos tu ROSA como color principal */
+  --ion-color-primary: #E4007C;
+  --ion-color-primary-rgb: 228, 0, 124;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #c9006d;
+  --ion-color-primary-tint: #e71a89;
+
+  /* Secondary: Tu MORADO */
+  --ion-color-secondary: #92278F;
+  --ion-color-secondary-rgb: 146, 39, 143;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #80227e;
+  --ion-color-secondary-tint: #9d3d9a;
+
+  /* Tertiary: Tu AZUL */
+  --ion-color-tertiary: #0095DA;
+  --ion-color-tertiary-rgb: 0, 149, 218;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #0083c0;
+  --ion-color-tertiary-tint: #1aa0de;
+
+  /* Colores de Estado (Éxito, Alerta, Peligro) */
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  --ion-color-medium: #92949c;
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  /* Fondo Blanco por defecto */
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
+
+  --ion-text-color: #000000;
+  --ion-text-color-rgb: 0, 0, 0;
+
+  --ion-item-background: #ffffff;
+  --ion-card-background: #ffffff;
 }
 
-/* Modo Oscuro */
+/* =============================================
+   2. MODO OSCURO (DARK MODE) AUTOMÁTICO
+   ============================================= */
+
 body.dark {
-  --bg-light:  #121212;
-  --bg-off:    #1e1e1e;
-  --text-main: #ffffff;
-  
+  /* Fondo Negro y Texto Blanco */
   --ion-background-color: #121212;
+  --ion-background-color-rgb: 18, 18, 18;
+
   --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+
+  /* Componentes Oscuros */
   --ion-item-background: #1e1e1e;
+  --ion-card-background: #1e1e1e;
+
+  --ion-tab-bar-background: #1f1f1f;
+
+  --ion-toolbar-background: #1f1f1f;
+  --ion-toolbar-color: #ffffff;
+
+  /* Ajustes de pasos de color para capas */
+  --ion-color-step-50: #1e1e1e;
+  --ion-color-step-100: #2a2a2a;
+  --ion-color-step-150: #363636;
+  --ion-color-step-200: #414141;
+  --ion-color-step-250: #4d4d4d;
+  --ion-color-step-300: #595959;
+  --ion-color-step-350: #656565;
+  --ion-color-step-400: #717171;
+  --ion-color-step-450: #7d7d7d;
+  --ion-color-step-500: #898989;
+  --ion-color-step-550: #949494;
+  --ion-color-step-600: #a0a0a0;
+  --ion-color-step-650: #acacac;
+  --ion-color-step-700: #b8b8b8;
+  --ion-color-step-750: #c4c4c4;
+  --ion-color-step-800: #d0d0d0;
+  --ion-color-step-850: #dbdbdb;
+  --ion-color-step-900: #e7e7e7;
+  --ion-color-step-950: #f3f3f3;
 }

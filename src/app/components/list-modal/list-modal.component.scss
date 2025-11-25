@@ -1,0 +1,28 @@
+ion-toolbar {
+  --background: var(--pm-pink); /* Color Pueblos Mágicos */
+  --color: white;
+}
+
+.list-content {
+  --background: #f4f4f4;
+}
+
+.place-item {
+  --background: white;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  
+  h2 { font-weight: 700; color: #333; }
+  p { font-size: 0.9rem; color: #666; }
+  .location-text { color: var(--pm-blue); font-size: 0.8rem; margin-top: 4px; }
+  
+  ion-thumbnail {
+    --border-radius: 10px;
+    img { object-fit: cover; }
+  }
+}
+
+.empty-state {
+  text-align: center; padding: 40px; color: #999;
+}

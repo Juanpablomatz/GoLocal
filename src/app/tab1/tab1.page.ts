@@ -1,27 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController, ActionSheetController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-// Importamos el servicio de datos
 import { DataService } from '../services/data.service';
-
-// Importamos el componente del Modal (El bonito)
-// Si esta línea marca error rojo, ve al Paso 3
-import { DetailModalComponent } from '../components/detail-modal/detail-modal.component';
+import { ListModalComponent } from '../components/list-modal/list-modal.component';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, DetailModalComponent]
+  imports: [IonicModule, CommonModule, FormsModule, ListModalComponent] 
 })
 export class Tab1Page implements OnInit {
   
   texts: any = {};
-  darkMode = false;
+  darkMode = false; 
   
+  // --- AQUÍ ESTÁN LAS VARIABLES QUE FALTABAN (Esto soluciona el error rojo) ---
+  logoPrincipal = 'assets/logo.jpeg';
+  botonDia      = 'assets/logo-dia.jpg'; 
+  botonNoche    = 'assets/logo-noche.jpg'; // Ojo: .jpg sin "e", según tus fotos
+  // ---------------------------------------------------------------------------
+
+  // Lista de categorías
   catList: any[] = [
     { key: 'taquerias', icon: '🌮', style: 'c-food' },
     { key: 'restaurantes', icon: '🍴', style: 'c-eat' },
@@ -42,14 +44,13 @@ export class Tab1Page implements OnInit {
 
   constructor(
     private dataService: DataService, 
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private actionSheetCtrl: ActionSheetController
   ) {}
 
   ngOnInit() {
     this.loadData();
-    this.dataService.currentLang$.subscribe(() => {
-      this.loadData();
-    });
+    this.dataService.currentLang$.subscribe(() => this.loadData());
   }
 
   loadData() {
@@ -57,20 +58,24 @@ export class Tab1Page implements OnInit {
   }
 
   async openModal(key: string) {
-    const itemData = this.dataService.getItemData(key);
-    if (itemData) {
-      const modal = await this.modalCtrl.create({
-        component: DetailModalComponent,
-        componentProps: { data: itemData }
-      });
-      await modal.present();
-    }
+    const list = this.dataService.getCategoryList(key);
+    const modal = await this.modalCtrl.create({
+      component: ListModalComponent,
+      componentProps: { categoryTitle: key.toUpperCase(), items: list }
+    });
+    await modal.present();
   }
 
-  toggleLang() {
-    const current = this.dataService.getLanguage();
-    const next = current === 'es' ? 'en' : 'es';
-    this.dataService.setLanguage(next);
+  async showLanguageMenu() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Selecciona un idioma',
+      buttons: [
+        { text: 'Español 🇲🇽', handler: () => { this.dataService.setLanguage('es'); } },
+        { text: 'English 🇺🇸', handler: () => { this.dataService.setLanguage('en'); } },
+        { text: 'Cancelar', role: 'cancel' }
+      ]
+    });
+    await actionSheet.present();
   }
 
   toggleDark() {
