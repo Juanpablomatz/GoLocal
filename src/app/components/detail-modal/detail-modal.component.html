@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">
+      <ion-button (click)="close()" aria-label="Cerrar modal">
         <ion-icon name="close-circle" style="font-size: 2rem; color: white; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -11,7 +11,7 @@
 <ion-content class="modal-content">
   <!-- Imagen Principal -->
   <div class="modal-media" *ngIf="data">
-    <img [src]="data.img" [alt]="data.title" onerror="this.src='https://via.placeholder.com/800x600?text=No+Image'"/>
+    <img [src]="data.img" [alt]="data.title || 'Imagen del lugar'" onerror="this.src='https://via.placeholder.com/800x600?text=No+Image'"/>
     <div class="overlay-gradient"></div>
     <h2 class="hero-title">{{ data.title }}</h2>
   </div>
@@ -20,9 +20,18 @@
   <div class="modal-body" *ngIf="data">
     <div class="info-card">
       <p class="description">{{ data.text }}</p>
+
       <div class="extra-info">
         <ion-icon name="location-outline"></ion-icon>
         <p class="small">{{ data.extra }}</p>
+      </div>
+
+      <!-- NUEVOS CAMPOS -->
+      <div class="additional-info">
+        <p *ngIf="data.direccion"><strong>Dirección:</strong> {{ data.direccion }}</p>
+        <p *ngIf="data.horario"><strong>Horario:</strong> {{ data.horario }}</p>
+        <p *ngIf="data.telefono"><strong>Teléfono:</strong> {{ data.telefono }}</p>
+        <p *ngIf="data.precio_persona"><strong>Precio aprox. por persona:</strong> {{ data.precio_persona }}</p>
       </div>
     </div>
 
@@ -37,12 +46,14 @@
         <p>Califica tu experiencia:</p>
         
         <!-- Estrellas Interactivas -->
-        <div class="stars-input">
+        <div class="stars-input" aria-label="Puntuación">
           <ion-icon 
             *ngFor="let s of starsArray" 
             [name]="s <= newRating ? 'star' : 'star-outline'"
             (click)="setRating(s)"
-            class="star-btn">
+            class="star-btn"
+            role="button"
+            tabindex="0">
           </ion-icon>
         </div>
 
@@ -50,7 +61,8 @@
           [(ngModel)]="newComment" 
           placeholder="¿Qué te pareció este lugar?"
           rows="3"
-          class="custom-textarea">
+          class="custom-textarea"
+          aria-label="Comentario">
         </ion-textarea>
 
         <ion-button expand="block" (click)="addReview()" class="publish-btn">
@@ -59,21 +71,25 @@
       </div>
 
       <!-- Lista de Reseñas Existentes -->
-      <div class="reviews-list">
+      <div class="reviews-list" *ngIf="data.reviews && data.reviews.length > 0; else noReviews">
         <div class="review-item" *ngFor="let review of data.reviews">
           <div class="review-header">
-            <span class="user-name">{{ review.user }}</span>
-            <div class="stars-display">
+            <span class="user-name">{{ review.user || 'Anónimo' }}</span>
+            <div class="stars-display" aria-hidden="true">
+              <!-- Si tu lógica actual usa [].constructor(review.stars) puedes dejarla; aquí ofrezco una alternativa segura
+                   Si no tienes helper para generar arrays, puedes mantener la tuya. -->
               <ion-icon name="star" *ngFor="let i of [].constructor(review.stars)" class="yellow-star"></ion-icon>
             </div>
           </div>
           <p class="review-text">"{{ review.comment }}"</p>
         </div>
+      </div>
 
-        <div *ngIf="data.reviews.length === 0" class="no-reviews">
+      <ng-template #noReviews>
+        <div class="no-reviews">
           <p>Aún no hay reseñas. ¡Sé el primero en opinar!</p>
         </div>
-      </div>
+      </ng-template>
     </div>
 
   </div>

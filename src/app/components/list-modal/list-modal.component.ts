@@ -25,9 +25,11 @@ export class ListModalComponent implements OnInit {
 
   // AL DAR CLIC EN UN NEGOCIO, ABRIMOS SU DETALLE
   async openDetail(item: any) {
+
     const modal = await this.modalCtrl.create({
       component: DetailModalComponent,
-      componentProps: { data: item } // Le pasamos SOLO los datos de ese negocio
+    componentProps: { data: item
+     } // Le pasamos SOLO los datos de ese negocio
     });
     await modal.present();
   }
