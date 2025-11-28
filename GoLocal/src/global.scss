@@ -35,3 +35,28 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Estilos necesarios para el Mapa (Leaflet) */
+@import "leaflet/dist/leaflet.css";
+
+
+
+/* Corrección para que se vea bien en Ionic */
+
+.leaflet-pane,
+.leaflet-tile,
+.leafle t-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-p ane>svg,
+.leaflet-pane>canvas,
+.leaflet-zoom-box,
+.leaflet-i mage-layer,
+.leaflet-layer {
+
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+}
