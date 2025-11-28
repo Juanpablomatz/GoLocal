@@ -22,6 +22,7 @@ export class DataService {
       heroDesc: "Guayaba, arte, historia y sabor en un solo lugar.",
       searchPlaceholder: "Busca un lugar...",
     },
+
     en: {
       heroTitle: "Discover Calvillo",
       heroDesc: "Guava, art, history and flavor in one place.",

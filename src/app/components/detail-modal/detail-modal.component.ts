@@ -1,32 +1,30 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, ModalController, ToastController } from '@ionic/angular'; // Agregamos Toast
-import { FormsModule } from '@angular/forms'; // Necesario para los inputs
+import { IonicModule, ModalController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms'; // <--- IMPORTANTE para que funcione [(ngModel)]
 
 @Component({
   selector: 'app-detail-modal',
   templateUrl: './detail-modal.component.html',
   styleUrls: ['./detail-modal.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule] // <--- Agrega FormsModule aquí
 })
 export class DetailModalComponent implements OnInit {
 
+  // Recibimos todos los datos del lugar
   @Input() data: any;
-  
-  // Variables para la nueva reseña
-  newComment: string = '';
-  newRating: number = 0;
-  starsArray = [1, 2, 3, 4, 5]; // Para dibujar las estrellas
 
-  constructor(
-    private modalCtrl: ModalController,
-    private toastCtrl: ToastController
-  ) { }
+  // Variables para la lógica de reseñas
+  starsArray: number[] = [1, 2, 3, 4, 5];
+  newRating: number = 0;
+  newComment: string = '';
+
+  constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    // Asegurarnos de que el array de reseñas exista
-    if (!this.data.reviews) {
+    // Si data no tiene reseñas iniciales, aseguramos que sea un array vacío para evitar errores
+    if (this.data && !this.data.reviews) {
       this.data.reviews = [];
     }
   }
@@ -36,42 +34,28 @@ export class DetailModalComponent implements OnInit {
   }
 
   // Función para seleccionar estrellas
-  setRating(stars: number) {
-    this.newRating = stars;
+  setRating(rating: number) {
+    this.newRating = rating;
   }
 
-  // Función para agregar la reseña
-  async addReview() {
-    if (this.newComment.trim() === '' || this.newRating === 0) {
-      // Mostrar error si falta info
-      const toast = await this.toastCtrl.create({
-        message: 'Por favor escribe un comentario y selecciona estrellas.',
-        duration: 2000,
-        color: 'warning'
-      });
-      toast.present();
+  // Función para publicar la reseña
+  addReview() {
+    if (this.newRating === 0 || this.newComment.trim() === '') {
+      // Aquí podrías poner una alerta si quieres validar
       return;
     }
 
-    // Crear objeto reseña
     const review = {
-      user: 'Usuario Invitado', // En el futuro usaremos el nombre real del registro
+      user: 'Usuario', // Aquí podrías poner el nombre real si tuvieras auth
       stars: this.newRating,
       comment: this.newComment
     };
 
-    // Agregar al inicio de la lista
-    this.data.reviews.unshift(review);
+    // Agregamos la reseña al array local para que se vea al instante
+    this.data.reviews.push(review);
 
-    // Limpiar formulario
-    this.newComment = '';
+    // Limpiamos el formulario
     this.newRating = 0;
-
-    const toast = await this.toastCtrl.create({
-      message: '¡Reseña publicada!',
-      duration: 2000,
-      color: 'success'
-    });
-    toast.present();
+    this.newComment = '';
   }
 }
