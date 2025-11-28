@@ -17,13 +17,12 @@ export class Tab1Page implements OnInit {
   texts: any = {};
   darkMode = false; 
   
-  // --- AQUÍ ESTÁN LAS VARIABLES QUE FALTABAN (Esto soluciona el error rojo) ---
+  // Imágenes
   logoPrincipal = 'assets/logo.jpeg';
   botonDia      = 'assets/logo-dia.jpg'; 
-  botonNoche    = 'assets/logo-noche.jpg'; // Ojo: .jpg sin "e", según tus fotos
-  // ---------------------------------------------------------------------------
+  botonNoche    = 'assets/logo-noche.jpg';
 
-  // Lista de categorías
+  // Lista de categorías para los botones
   catList: any[] = [
     { key: 'taquerias', icon: '🌮', style: 'c-food' },
     { key: 'restaurantes', icon: '🍴', style: 'c-eat' },
@@ -57,13 +56,27 @@ export class Tab1Page implements OnInit {
     this.texts = this.dataService.getTexts();
   }
 
-  async openModal(key: string) {
-    const list = this.dataService.getCategoryList(key);
-    const modal = await this.modalCtrl.create({
-      component: ListModalComponent,
-      componentProps: { categoryTitle: key.toUpperCase(), items: list }
+  // --- AQUÍ ESTÁ LA CORRECCIÓN PRINCIPAL ---
+  // Antes leía una lista local, ahora pide los datos al servidor (Python/Mongo)
+  openModal(key: string) {
+    // 1. Llamamos a la función nueva del servicio
+    this.dataService.getPlacesByCategory(key).subscribe(async (dataRecibida) => {
+      
+      // 2. Cuando el servidor responde (dataRecibida), abrimos el modal
+      const modal = await this.modalCtrl.create({
+        component: ListModalComponent,
+        componentProps: { 
+          categoryTitle: key.toUpperCase(), 
+          items: dataRecibida // Pasamos los datos reales que llegaron de la nube
+        }
+      });
+      await modal.present();
+
+    }, (error) => {
+      console.error("Error al cargar datos:", error);
+      // Opcional: Mostrar alerta si falla
+      alert('Error: No se pudo conectar con el servidor. Revisa que python app.py esté corriendo.');
     });
-    await modal.present();
   }
 
   async showLanguageMenu() {

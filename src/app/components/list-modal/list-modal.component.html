@@ -8,26 +8,82 @@
 </ion-header>
 
 <ion-content class="list-content">
-  <!-- Si la lista está vacía -->
+
+  <!-- Mensaje si no hay lugares -->
   <div *ngIf="items.length === 0" class="empty-state">
-    <p>Próximamente agregaremos lugares aquí.</p>
+    <p>Aún no hay lugares en esta categoría.</p>
   </div>
 
-  <!-- Lista de Negocios -->
+  <!-- LISTA REAL DE LUGARES -->
   <ion-list lines="none">
+    
+    <!-- Aquí ocurre la magia: Por cada lugar (place) crea un item -->
     <ion-item *ngFor="let place of items" (click)="openDetail(place)" class="place-item" detail="true">
       
-      <!-- Foto pequeña del lugar -->
+      <!-- FOTO (Usamos 'imagen') -->
       <ion-thumbnail slot="start">
-        <img [src]="place.img" onerror="this.src='assets/icon/favicon.png'" />
+        <img [src]="place.imagen" onerror="this.src='assets/icon/favicon.png'" style="object-fit: cover; border-radius: 8px;" />
       </ion-thumbnail>
       
       <ion-label>
-        <h2>{{ place.title }}</h2>
-        <p>{{ place.desc }}</p>
-        <p class="location-text">📍 {{ place.extra }}</p>
+        <!-- TÍTULO (Usamos 'titulo') -->
+        <h2>{{ place.titulo }}</h2>
+        
+        <!-- DESCRIPCIÓN CORTA (Usamos 'descripcion') -->
+        <p>{{ place.descripcion }}</p>
+        
+        <!-- UBICACIÓN (Usamos 'ubicacion.direccion') -->
+        <p class="location-text" *ngIf="place.ubicacion">
+          📍 {{ place.ubicacion.direccion }}
+        </p>
       </ion-label>
       
     </ion-item>
+
   </ion-list>
+
+</ion-content><ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ categoryTitle }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="list-content">
+
+  <!-- Mensaje si no hay lugares -->
+  <div *ngIf="items.length === 0" class="empty-state">
+    <p>Aún no hay lugares en esta categoría.</p>
+  </div>
+
+  <!-- LISTA REAL DE LUGARES -->
+  <ion-list lines="none">
+    
+    <!-- Aquí ocurre la magia: Por cada lugar (place) crea un item -->
+    <ion-item *ngFor="let place of items" (click)="openDetail(place)" class="place-item" detail="true">
+      
+      <!-- FOTO (Usamos 'imagen') -->
+      <ion-thumbnail slot="start">
+        <img [src]="place.imagen" onerror="this.src='assets/icon/favicon.png'" style="object-fit: cover; border-radius: 8px;" />
+      </ion-thumbnail>
+      
+      <ion-label>
+        <!-- TÍTULO (Usamos 'titulo') -->
+        <h2>{{ place.titulo }}</h2>
+        
+        <!-- DESCRIPCIÓN CORTA (Usamos 'descripcion') -->
+        <p>{{ place.descripcion }}</p>
+        
+        <!-- UBICACIÓN (Usamos 'ubicacion.direccion') -->
+        <p class="location-text" *ngIf="place.ubicacion">
+          📍 {{ place.ubicacion.direccion }}
+        </p>
+      </ion-label>
+      
+    </ion-item>
+
+  </ion-list>
+
 </ion-content>

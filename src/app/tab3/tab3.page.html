@@ -1,17 +1,30 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+    <ion-title>Tu Ruta Ideal 📍</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  
+  <div class="header-section">
+    <h2>Hola, Viajero</h2>
+    <p>Basado en tus gustos: <br>
+      <span class="tag" *ngFor="let gusto of misIntereses">#{{gusto}} </span>
+    </p>
+  </div>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <!-- Aquí usamos tu componente de lista para mostrar los resultados -->
+  <!-- Esto muestra los lugares que Python encontró -->
+  <div class="results-container">
+    <app-list-modal 
+      [categoryTitle]="'Recomendado para ti'" 
+      [items]="rutaSugerida">
+    </app-list-modal>
+  </div>
+
+  <!-- Si no hay coincidencias -->
+  <div *ngIf="rutaSugerida.length === 0" class="empty-state">
+    <p>No encontramos lugares exactos para tus gustos hoy. 🐢</p>
+  </div>
+
 </ion-content>
