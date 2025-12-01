@@ -1,11 +1,7 @@
 <ion-content class="login-content">
-  <!-- Fondo degradado -->
   <div class="bg-overlay"></div>
-
   <div class="login-container">
-    
     <div class="card-login">
-      <!-- Encabezado -->
       <div class="header">
         <div class="logo-circle">
           <img src="assets/logo.jpeg" alt="Logo GoLocal" class="login-logo">
@@ -14,50 +10,33 @@
         <p>Explora la magia de Calvillo</p>
       </div>
 
-      <!-- Formulario -->
       <div class="form">
-        
-        <!-- Input Correo -->
         <div class="input-group">
           <ion-icon name="mail-outline"></ion-icon>
-          <ion-input placeholder="Correo electrónico" type="email"></ion-input>
+          <ion-input placeholder="Correo electrónico" type="email" [(ngModel)]="credenciales.email"></ion-input>
         </div>
-
-        <!-- Input Contraseña -->
         <div class="input-group">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <ion-input placeholder="Contraseña" type="password"></ion-input>
+          <ion-input placeholder="Contraseña" type="password" [(ngModel)]="credenciales.password"></ion-input>
         </div>
 
-        <div class="forgot">
-          <a>¿Olvidaste tu contraseña?</a>
-        </div>
+        <div class="forgot"><a>¿Olvidaste tu contraseña?</a></div>
 
-        <!-- Botón Principal (Lleva al Home por ahora) -->
-        <ion-button expand="block" class="login-btn" routerLink="/tabs/tab1">
+        <!-- BOTÓN BLOQUEADO: Sin routerLink, llama a la función ingresar() -->
+        <ion-button expand="block" class="login-btn" (click)="ingresar()">
           INICIAR SESIÓN
         </ion-button>
 
-        <div class="divider">
-          <span>o conecta con</span>
-        </div>
-
-        <!-- Botones Sociales -->
+        <div class="divider"><span>o conecta con</span></div>
         <div class="social-login">
-          <ion-button fill="clear" class="social-btn google">
-            <ion-icon name="logo-google"></ion-icon>
-          </ion-button>
-          <ion-button fill="clear" class="social-btn facebook">
-            <ion-icon name="logo-facebook"></ion-icon>
-          </ion-button>
+          <ion-button fill="clear" class="social-btn google"><ion-icon name="logo-google"></ion-icon></ion-button>
+          <ion-button fill="clear" class="social-btn facebook"><ion-icon name="logo-facebook"></ion-icon></ion-button>
         </div>
       </div>
 
-      <!-- Pie de página: Ir al Registro -->
       <div class="footer">
         ¿No tienes cuenta? <strong routerLink="/register">Regístrate aquí</strong>
       </div>
     </div>
-    
   </div>
 </ion-content>

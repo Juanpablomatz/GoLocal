@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; // <--- IMPORTANTE: Para hablar con Python
+import { HttpClient } from '@angular/common/http'; 
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -10,19 +10,17 @@ export class DataService {
   private currentLang = new BehaviorSubject<string>('es');
   public currentLang$ = this.currentLang.asObservable();
 
-  // 1. URL DE TU BACKEND PYTHON
-  // Asegúrate de que tu servidor Python esté corriendo (python app.py)
+  // URL DE TU BACKEND PYTHON
+  // Asegúrate de que python app.py esté corriendo
   private apiUrl = 'http://localhost:3000/api';
 
-  // 2. TEXTOS FIJOS DE LA INTERFAZ (Solo títulos y descripciones)
-  // Ya no ponemos la lista de lugares aquí porque ahora vienen de Mongo
+  // Textos fijos de la interfaz
   private uiTexts: any = {
     es: {
       heroTitle: "Descubre la magia de Calvillo",
       heroDesc: "Guayaba, arte, historia y sabor en un solo lugar.",
       searchPlaceholder: "Busca un lugar...",
     },
-
     en: {
       heroTitle: "Discover Calvillo",
       heroDesc: "Guava, art, history and flavor in one place.",
@@ -30,31 +28,45 @@ export class DataService {
     }
   };
 
-  // Inyectamos HttpClient para poder hacer peticiones
   constructor(private http: HttpClient) { }
 
   // --- LÓGICA DE IDIOMA ---
   setLanguage(lang: string) { this.currentLang.next(lang); }
   getLanguage() { return this.currentLang.value; }
-  
-  // Devuelve solo los textos de la interfaz (Hero, Títulos)
   getTexts() { return this.uiTexts[this.currentLang.value]; }
   
   
   // --- CONEXIONES CON EL BACKEND (PYTHON) ---
 
-  // A. Para TAB 1: Obtener lista de lugares por categoría
-  // Ejemplo: Llama a http://localhost:3000/api/lugares/taquerias
+  // 1. Para TAB 1: Obtener lista de lugares por categoría
   getPlacesByCategory(category: string) {
     return this.http.get<any[]>(`${this.apiUrl}/lugares/${category}`);
   }
 
-  // B. Para TAB 3: Obtener recomendaciones basadas en gustos
-  // Ejemplo: Envía ["comida", "naturaleza"] a Python y recibe la ruta sugerida
+  // 2. Para TAB 2 (MAPA): Obtener TODOS los lugares
+  getAllPlaces() {
+    return this.http.get<any[]>(`${this.apiUrl}/lugares`);
+  }
+
+  // 3. Para TAB 3: Obtener recomendaciones basadas en gustos
   getRecommendations(userInterests: string[]) {
     return this.http.post<any[]>(`${this.apiUrl}/recomendaciones`, { 
       intereses: userInterests 
     });
   }
 
+  // 4. Para REGISTRO: Guardar nuevo usuario
+  registerUser(datosUsuario: any) {
+    return this.http.post(`${this.apiUrl}/registro`, datosUsuario);
+  }
+// 5. Para LOGIN: Verificar credenciales
+  loginUser(credenciales: any) {
+    return this.http.post(`${this.apiUrl}/login`, credenciales);
+  }
+  // ... (tus otras funciones)
+
+  // 6. Para GUARDAR COMENTARIOS
+  addReview(placeId: string, review: any) {
+    return this.http.post(`${this.apiUrl}/lugares/${placeId}/resena`, review);
+  }
 }

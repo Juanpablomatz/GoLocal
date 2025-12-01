@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button (click)="close()" aria-label="Cerrar modal">
+      <ion-button (click)="close()">
         <ion-icon name="close-circle" style="font-size: 2rem; color: white; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -11,27 +11,19 @@
 <ion-content class="modal-content">
   <!-- Imagen Principal -->
   <div class="modal-media" *ngIf="data">
-    <img [src]="data.img" [alt]="data.title || 'Imagen del lugar'" onerror="this.src='https://via.placeholder.com/800x600?text=No+Image'"/>
+    <img [src]="data.imagen" [alt]="data.titulo" onerror="this.src='https://via.placeholder.com/800x600?text=No+Image'"/>
     <div class="overlay-gradient"></div>
-    <h2 class="hero-title">{{ data.title }}</h2>
+    <h2 class="hero-title">{{ data.titulo }}</h2>
   </div>
   
-  <!-- Información del Lugar -->
   <div class="modal-body" *ngIf="data">
     <div class="info-card">
-      <p class="description">{{ data.text }}</p>
-
-      <div class="extra-info">
+      <p class="description">{{ data.descripcion }}</p>
+      
+      <!-- Ubicación con validación segura -->
+      <div class="extra-info" *ngIf="data.ubicacion">
         <ion-icon name="location-outline"></ion-icon>
-        <p class="small">{{ data.extra }}</p>
-      </div>
-
-      <!-- NUEVOS CAMPOS -->
-      <div class="additional-info">
-        <p *ngIf="data.direccion"><strong>Dirección:</strong> {{ data.direccion }}</p>
-        <p *ngIf="data.horario"><strong>Horario:</strong> {{ data.horario }}</p>
-        <p *ngIf="data.telefono"><strong>Teléfono:</strong> {{ data.telefono }}</p>
-        <p *ngIf="data.precio_persona"><strong>Precio aprox. por persona:</strong> {{ data.precio_persona }}</p>
+        <p class="small">{{ data.ubicacion.direccion || 'Ubicación no disponible' }}</p>
       </div>
     </div>
 
@@ -41,55 +33,45 @@
     <div class="reviews-section">
       <h3>Reseñas y Opiniones</h3>
       
-      <!-- Formulario para agregar reseña -->
       <div class="add-review-box">
         <p>Califica tu experiencia:</p>
-        
-        <!-- Estrellas Interactivas -->
-        <div class="stars-input" aria-label="Puntuación">
+        <div class="stars-input">
           <ion-icon 
             *ngFor="let s of starsArray" 
             [name]="s <= newRating ? 'star' : 'star-outline'"
             (click)="setRating(s)"
-            class="star-btn"
-            role="button"
-            tabindex="0">
+            class="star-btn">
           </ion-icon>
         </div>
-
         <ion-textarea 
           [(ngModel)]="newComment" 
           placeholder="¿Qué te pareció este lugar?"
           rows="3"
-          class="custom-textarea"
-          aria-label="Comentario">
+          class="custom-textarea">
         </ion-textarea>
-
         <ion-button expand="block" (click)="addReview()" class="publish-btn">
           Publicar Reseña
         </ion-button>
       </div>
 
-      <!-- Lista de Reseñas Existentes -->
-      <div class="reviews-list" *ngIf="data.reviews && data.reviews.length > 0; else noReviews">
-        <div class="review-item" *ngFor="let review of data.reviews">
+      <!-- LISTA DE RESEÑAS (Usando la variable limpia reviewsList) -->
+      <div class="reviews-list">
+        
+        <div class="review-item" *ngFor="let review of reviewsList">
           <div class="review-header">
-            <span class="user-name">{{ review.user || 'Anónimo' }}</span>
-            <div class="stars-display" aria-hidden="true">
-              <!-- Si tu lógica actual usa [].constructor(review.stars) puedes dejarla; aquí ofrezco una alternativa segura
-                   Si no tienes helper para generar arrays, puedes mantener la tuya. -->
+            <span class="user-name">{{ review.user }}</span>
+            <div class="stars-display">
               <ion-icon name="star" *ngFor="let i of [].constructor(review.stars)" class="yellow-star"></ion-icon>
             </div>
           </div>
           <p class="review-text">"{{ review.comment }}"</p>
         </div>
-      </div>
 
-      <ng-template #noReviews>
-        <div class="no-reviews">
+        <div *ngIf="reviewsList.length === 0" class="no-reviews">
           <p>Aún no hay reseñas. ¡Sé el primero en opinar!</p>
         </div>
-      </ng-template>
+
+      </div>
     </div>
 
   </div>

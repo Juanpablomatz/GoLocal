@@ -1,31 +1,37 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, ModalController } from '@ionic/angular';
-import { FormsModule } from '@angular/forms'; // <--- IMPORTANTE para que funcione [(ngModel)]
+import { IonicModule, ModalController, ToastController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-detail-modal',
   templateUrl: './detail-modal.component.html',
   styleUrls: ['./detail-modal.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule] // <--- Agrega FormsModule aquí
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class DetailModalComponent implements OnInit {
 
-  // Recibimos todos los datos del lugar
   @Input() data: any;
+  
+  // Variable limpia (SIN EÑE) para usar en el HTML
+  reviewsList: any[] = [];
 
-  // Variables para la lógica de reseñas
-  starsArray: number[] = [1, 2, 3, 4, 5];
-  newRating: number = 0;
   newComment: string = '';
+  newRating: number = 0;
+  starsArray = [1, 2, 3, 4, 5];
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(
+    private modalCtrl: ModalController,
+    private toastCtrl: ToastController
+  ) { }
 
   ngOnInit() {
-    // Si data no tiene reseñas iniciales, aseguramos que sea un array vacío para evitar errores
-    if (this.data && !this.data.reviews) {
-      this.data.reviews = [];
+    // AQUÍ ESTÁ EL TRUCO:
+    // Pasamos los datos de "reseñas" (con ñ) a "reviewsList" (sin ñ)
+    // Usamos ['brackets'] para que TypeScript no se queje de la ñ
+    if (this.data) {
+      this.reviewsList = this.data['reseñas'] || this.data['reviews'] || [];
     }
   }
 
@@ -33,29 +39,43 @@ export class DetailModalComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  // Función para seleccionar estrellas
-  setRating(rating: number) {
-    this.newRating = rating;
+  setRating(stars: number) {
+    this.newRating = stars;
   }
 
-  // Función para publicar la reseña
-  addReview() {
-    if (this.newRating === 0 || this.newComment.trim() === '') {
-      // Aquí podrías poner una alerta si quieres validar
+  async addReview() {
+    if (this.newComment.trim() === '' || this.newRating === 0) {
+      const toast = await this.toastCtrl.create({
+        message: 'Por favor escribe un comentario y selecciona estrellas.',
+        duration: 2000,
+        color: 'warning'
+      });
+      toast.present();
       return;
     }
 
     const review = {
-      user: 'Usuario', // Aquí podrías poner el nombre real si tuvieras auth
+      user: 'Usuario Invitado',
       stars: this.newRating,
       comment: this.newComment
     };
 
-    // Agregamos la reseña al array local para que se vea al instante
-    this.data.reviews.push(review);
+    // Agregamos a la lista limpia
+    this.reviewsList.unshift(review);
 
-    // Limpiamos el formulario
-    this.newRating = 0;
+    // Intentamos guardar en el objeto original también (por si acaso)
+    if(this.data['reseñas']) {
+       this.data['reseñas'].unshift(review);
+    }
+
     this.newComment = '';
+    this.newRating = 0;
+
+    const toast = await this.toastCtrl.create({
+      message: '¡Reseña publicada!',
+      duration: 2000,
+      color: 'success'
+    });
+    toast.present();
   }
 }

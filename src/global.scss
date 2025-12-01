@@ -50,3 +50,26 @@ body.dark {
   --ion-toolbar-background: #1f1f1f;
   --ion-tab-bar-background: #1f1f1f;
 }
+/* Importar estilos de Leaflet para que el mapa no se rompa */
+@import 'leaflet/dist/leaflet.css';
+/* Que el mapa ocupe todo el espacio disponible */
+#mapId { /* O el nombre que le hayas puesto al div del mapa, a veces es 'map' */
+  width: 100%;
+  height: 100%;
+}
+
+/* Corrección para que los controles del mapa se vean bien en Ionic */
+.leaflet-pane, 
+.leaflet-tile, 
+.leaflet-marker-icon, 
+.leaflet-marker-shadow, 
+.leaflet-tile-container, 
+.leaflet-pane > svg, 
+.leaflet-pane > canvas, 
+.leaflet-zoom-box, 
+.leaflet-image-layer, 
+.leaflet-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
