@@ -14,9 +14,6 @@ export class DetailModalComponent implements OnInit {
 
   @Input() data: any;
   
-  // Variable limpia (SIN EÑE) para usar en el HTML
-  reviewsList: any[] = [];
-
   newComment: string = '';
   newRating: number = 0;
   starsArray = [1, 2, 3, 4, 5];
@@ -27,11 +24,9 @@ export class DetailModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // AQUÍ ESTÁ EL TRUCO:
-    // Pasamos los datos de "reseñas" (con ñ) a "reviewsList" (sin ñ)
-    // Usamos ['brackets'] para que TypeScript no se queje de la ñ
-    if (this.data) {
-      this.reviewsList = this.data['reseñas'] || this.data['reviews'] || [];
+    // Si no existe la lista de reseñas en el objeto, la creamos
+    if (!this.data['reseñas']) {
+      this.data['reseñas'] = [];
     }
   }
 
@@ -44,9 +39,10 @@ export class DetailModalComponent implements OnInit {
   }
 
   async addReview() {
+    // Validación simple
     if (this.newComment.trim() === '' || this.newRating === 0) {
       const toast = await this.toastCtrl.create({
-        message: 'Por favor escribe un comentario y selecciona estrellas.',
+        message: 'Por favor califica y escribe algo.',
         duration: 2000,
         color: 'warning'
       });
@@ -60,14 +56,10 @@ export class DetailModalComponent implements OnInit {
       comment: this.newComment
     };
 
-    // Agregamos a la lista limpia
-    this.reviewsList.unshift(review);
+    // Agregamos a la lista original (usando corchetes por la ñ)
+    this.data['reseñas'].unshift(review);
 
-    // Intentamos guardar en el objeto original también (por si acaso)
-    if(this.data['reseñas']) {
-       this.data['reseñas'].unshift(review);
-    }
-
+    // Limpiamos el formulario
     this.newComment = '';
     this.newRating = 0;
 

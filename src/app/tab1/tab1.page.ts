@@ -23,21 +23,23 @@ export class Tab1Page implements OnInit {
   botonNoche    = 'assets/logo-noche.jpg';
 
   // Lista de categorías para los botones
+ // Lista de categorías (Sin Plaza, con Pizzería y Turismo)
   catList: any[] = [
     { key: 'taquerias', icon: '🌮', style: 'c-food' },
-    { key: 'restaurantes', icon: '🍴', style: 'c-eat' },
+    { key: 'restaurantes', icon: '🍽️', style: 'c-eat' }, // Aquí saldrá Rosa Mexicano y Pietra
+    { key: 'pizzeria', icon: '🍕', style: 'c-pizza' },    // Aquí saldrá La Esquina
     { key: 'cascadas', icon: '🏞', style: 'c-nature' },
+    { key: 'turismo', icon: '🚌', style: 'c-fun' },      // Aquí saldrá el Guayabus
+    { key: 'hoteles', icon: '🏨', style: 'c-stay' },     // Aquí saldrá Casa Bugambilias
+    { key: 'dulces', icon: '🍬', style: 'c-sweet' },
+    
+    // Las demás las dejamos por si las usas luego
     { key: 'presas', icon: '💧', style: 'c-water' },
     { key: 'cabanas', icon: '🏡', style: 'c-stay' },
-    { key: 'hoteles', icon: '🏨', style: 'c-stay' },
-    { key: 'turismo', icon: '🌟', style: 'c-fun' },
-    { key: 'dulces', icon: '🍬', style: 'c-sweet' },
-    { key: 'plaza', icon: '🏛', style: 'c-place' },
     { key: 'albercas', icon: '🏊', style: 'c-water' },
     { key: 'mercados', icon: '🛍', style: 'c-market' },
     { key: 'panaderias', icon: '🍞', style: 'c-eat' },
     { key: 'museo', icon: '🏛️', style: 'c-museum' },
-    { key: 'pizzeria', icon: '🍕', style: 'c-eat' },
     { key: 'historia', icon: '📜', style: 'c-place' }
   ];
 
