@@ -11,8 +11,8 @@ app.use(express.json());
 const mongoString = process.env.DATABASE_URL;
 
 mongoose.connect(mongoString)
-    .then(() => console.log('✅ ¡CONECTADO! Base de datos lista en la nube.'))
-    .catch((error) => console.log('❌ ERROR de conexión:', error));
+    .then(() => console.log(' Base de datos lista en la nube.'))
+    .catch((error) => console.log('error de conexión:', error));
 
 // Definimos cómo es un Lugar
 const lugarSchema = new mongoose.Schema({
@@ -33,7 +33,7 @@ const Lugar = mongoose.model('Lugar', lugarSchema);
 
 // Rutas (El menú del mesero)
 app.get('/', (req, res) => {
-    res.send('Backend de GoLocal funcionando al 100% 🚀');
+    res.send('Backend de GoLocal funcionando ');
 });
 
 app.get('/api/lugares', async (req, res) => {
@@ -58,5 +58,5 @@ app.get('/api/lugares/:categoria', async (req, res) => {
 // Encender
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor escuchando en el puerto ${PORT}`);
+    console.log(` Servidor escuchando en el puerto ${PORT}`);
 });

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     
-    <!-- IZQUIERDA: LOGO FIJO (Siempre es el mismo) -->
+    <!-- IZQUIERDA: LOGO FIJO -->
     <div class="logo-container" slot="start">
       <img [src]="logoPrincipal" alt="Logo Calvillo" class="main-logo">
       <div class="text">
@@ -19,12 +19,8 @@
         IDIOMA ▾
       </ion-button>
 
-      <!-- BOTÓN CAMBIO DE TEMA (Con Imágenes Día/Noche) -->
+      <!-- BOTÓN CAMBIO DE TEMA -->
       <ion-button (click)="toggleDark()" class="btn-mode-img">
-        <!-- 
-           Si es DarkMode (true) -> Muestra botonNoche
-           Si es LightMode (false) -> Muestra botonDia
-        -->
         <img [src]="darkMode ? botonNoche : botonDia" alt="Tema">
       </ion-button>
 
@@ -36,14 +32,22 @@
 <ion-content [fullscreen]="true" class="main-content">
   
   <!-- SECCIÓN HERO (Imagen de fondo y Título) -->
+  <!-- SECCIÓN HERO (Portada) -->
   <div class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>{{ texts?.heroTitle }}</h1>
-      <p>{{ texts?.heroDesc }}</p>
       
-      <!-- Barra de búsqueda -->
-      <ion-searchbar [placeholder]="texts?.searchPlaceholder" class="custom-search"></ion-searchbar>
+      <!-- Título Principal -->
+      <h1>Descubre Calvillo</h1>
+      
+      <!-- Descripción -->
+      <p class="subtitle">La Capital Mundial de la Guayaba</p>
+      
+      <!-- Donde estaba el buscador, ponemos este distintivo bonito -->
+      <div class="badge-container">
+        <span class="magic-badge">✨ Pueblo Mágico ✨</span>
+      </div>
+
     </div>
   </div>
 
