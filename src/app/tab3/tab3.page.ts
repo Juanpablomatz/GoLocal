@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../services/data.service';
-import { ListModalComponent } from '../components/list-modal/list-modal.component'; // Reusamos el componente de lista
+import { ListModalComponent } from '../components/list-modal/list-modal.component';
 
 @Component({
   selector: 'app-tab3',
@@ -13,40 +13,36 @@ import { ListModalComponent } from '../components/list-modal/list-modal.componen
 })
 export class Tab3Page implements OnInit {
   
-  // Aquí guardaremos los lugares que coincidan con los gustos
+  // Aquí guardaremos los lugares que encuentre la inteligencia
   rutaSugerida: any[] = [];
-  misIntereses: string[] = [];
+  
+  // SIMULACIÓN: Estos son los gustos del usuario
+  // (Asegúrate de que en Mongo tengas lugares con estas etiquetas)
+  misIntereses:  string[] = ['comida', 'tacos'];
 
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    this.cargarRuta();
+    this.cargarRecomendaciones();
   }
 
-  // Esta función se ejecuta cada vez que entras a la pestaña
+  // Se ejecuta cada vez que entras a la pestaña
   ionViewWillEnter() {
-    this.cargarRuta();
+    this.cargarRecomendaciones();
   }
 
-  cargarRuta() {
-    // 1. SIMULACIÓN: Recuperamos los intereses del usuario
-    // (En el futuro esto vendrá del Login real)
-    // Por ahora, supongamos que al usuario le gusta esto:
-    const interesesGuardados = localStorage.getItem('userInterests');
-    
-    if (interesesGuardados) {
-      this.misIntereses = JSON.parse(interesesGuardados);
-    } else {
-      // Si no ha elegido nada, usamos unos por defecto para probar
-      this.misIntereses = ['comida', 'naturaleza']; 
-    }
+  cargarRecomendaciones() {
+    console.log("Buscando recomendaciones para:", this.misIntereses);
 
-    console.log("Buscando rutas para:", this.misIntereses);
-
-    // 2. Pedimos al servidor la ruta mágica
-    this.dataService.getRecommendations(this.misIntereses).subscribe(data => {
-      this.rutaSugerida = data;
-      console.log("Lugares encontrados:", data);
-    });
+    // Pedimos al servidor que filtre por nuestros gustos
+    this.dataService.getRecommendations(this.misIntereses).subscribe(
+      (data) => {
+        this.rutaSugerida = data;
+        console.log("Lugares encontrados:", data);
+      },
+      (error) => {
+        console.error("Error cargando recomendaciones:", error);
+      }
+    );
   }
 }

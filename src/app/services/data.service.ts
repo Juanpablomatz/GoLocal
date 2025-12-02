@@ -11,7 +11,6 @@ export class DataService {
   public currentLang$ = this.currentLang.asObservable();
 
   // URL DE TU BACKEND PYTHON
-  // Asegúrate de que python app.py esté corriendo
   private apiUrl = 'http://localhost:3000/api';
 
   // Textos fijos de la interfaz
@@ -59,14 +58,15 @@ export class DataService {
   registerUser(datosUsuario: any) {
     return this.http.post(`${this.apiUrl}/registro`, datosUsuario);
   }
-// 5. Para LOGIN: Verificar credenciales
+
+  // 5. Para LOGIN: Verificar credenciales
   loginUser(credenciales: any) {
     return this.http.post(`${this.apiUrl}/login`, credenciales);
   }
-  // ... (tus otras funciones)
 
   // 6. Para GUARDAR COMENTARIOS
   addReview(placeId: string, review: any) {
     return this.http.post(`${this.apiUrl}/lugares/${placeId}/resena`, review);
   }
+
 }

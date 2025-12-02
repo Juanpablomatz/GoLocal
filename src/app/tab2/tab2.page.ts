@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet'; // El motor del mapa
@@ -11,49 +11,81 @@ import { DataService } from '../services/data.service'; // Tus datos
   standalone: true,
   imports: [IonicModule, CommonModule]
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page implements OnInit, OnDestroy {
 
   map: L.Map | undefined;
 
   constructor(private dataService: DataService) {}
 
-  ngOnInit() {
-    // Esperamos un poco para que el diseño cargue
-    setTimeout(() => {
-      this.initMap();
-    }, 500);
+  // Usamos ionViewDidEnter para asegurar que el HTML ya existe antes de cargar el mapa
+  ionViewDidEnter() {
+    this.loadMap();
   }
 
-  initMap() {
-    // 1. Centro del mapa (Calvillo)
-    const calvilloCoords: [number, number] = [21.8469, -102.7189];
+  loadMap() {
+    // 1. Si el mapa ya existe, lo borramos para no duplicarlo
+    if (this.map) {
+      this.map.remove();
+    }
 
-    this.map = L.map('mapId').setView(calvilloCoords, 13);
+    // 2. Coordenadas iniciales (Centro de Calvillo)
+    const centroCalvillo: [number, number] = [21.8469, -102.7189];
 
-    // 2. Capa visual (OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© GoLocal'
+    // 3. Crear el mapa
+    this.map = L.map('mapId').setView(centroCalvillo, 14);
+
+    // 4. Ponerle la "piel" (Estilo callejero claro)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
 
-    // 3. PEDIR LUGARES A MONGO Y PONER MARCADORES
+    // 5. PEDIR LOS LUGARES A LA BASE DE DATOS
     this.dataService.getAllPlaces().subscribe(lugares => {
       
-      console.log("Cargando en mapa:", lugares);
-
       lugares.forEach(lugar => {
-        // Solo si tiene coordenadas válidas
-        if (lugar.ubicacion && lugar.ubicacion.lat && lugar.ubicacion.lng) {
+        if (lugar.ubicacion && lugar.ubicacion.lat) {
           
-          // Crear marcador
-          const marker = L.marker([lugar.ubicacion.lat, lugar.ubicacion.lng])
+          // --- AQUÍ ELEGIMOS EL SIMBOLITO ---
+          const emoji = this.getEmojiPorCategoria(lugar.categoria_principal);
+
+          // Creamos un icono personalizado (DivIcon)
+          const customIcon = L.divIcon({
+            className: 'custom-marker', // Clase CSS que definiremos abajo
+            html: `<div style="font-size: 30px;">${emoji}</div>`, // El emoji gigante
+            iconSize: [30, 30],
+            iconAnchor: [15, 15] // Centrarlo
+          });
+
+          // Poner el marcador en el mapa
+          L.marker([lugar.ubicacion.lat, lugar.ubicacion.lng], { icon: customIcon })
             .addTo(this.map!)
-            .bindPopup(`
-              <b>${lugar.titulo}</b><br>
-              <img src="${lugar.imagen}" style="width:100px; height:60px; object-fit:cover; margin-top:5px;">
-            `);
+            .bindPopup(`<b>${lugar.titulo}</b><br>${lugar.descripcion}`);
         }
       });
 
     });
   }
+
+  // Diccionario de Emojis
+  getEmojiPorCategoria(cat: string): string {
+    switch (cat) {
+      case 'taquerias': return '🌮';
+      case 'restaurantes': return '🍴';
+      case 'pizzeria': return '🍕';
+      case 'cascadas': return '🌊';
+      case 'presas': return '💧';
+      case 'albercas': return '🏊';
+      case 'hoteles': return '🏨';
+      case 'cabanas': return '🏡';
+      case 'museo': return '🏛️';
+      case 'dulces': return '🍬';
+      case 'panaderias': return '🥐';
+      default: return '📍'; // Globo rojo si no sabemos qué es
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.map) this.map.remove();
+  }
+  ngOnInit() {}
 }

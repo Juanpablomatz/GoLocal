@@ -1,1 +1,63 @@
+/* --- BARRA FLOTANTE --- */
+ion-tab-bar {
+  position: absolute;
+  bottom: 20px; /* Separación del suelo */
+  left: 15px;
+  right: 15px;
+  height: 65px;
+  border-radius: 25px; /* Bordes redondos */
+  
+  /* Fondo blanco medio transparente (Efecto Cristal) */
+  --background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  
+  /* Sombra elegante */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: none;
+  padding-bottom: 0;
+}
 
+/* Ajuste para Modo Oscuro */
+:host-context(body.dark) ion-tab-bar {
+  --background: rgba(30, 30, 30, 0.95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* --- BOTONES DE LA BARRA --- */
+ion-tab-button {
+  --background: transparent;
+  --color: #999; /* Color cuando NO está seleccionado */
+  
+  /* Animación suave */
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+ion-icon {
+  font-size: 1.6rem;
+  margin-bottom: 3px;
+}
+
+ion-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* --- CUANDO SELECCIONAS UN TAB (La Magia) --- */
+.tab-selected {
+  /* El icono sube un poquito */
+  transform: translateY(-5px);
+  
+  /* Color del icono seleccionado (Rosa/Morado) */
+  --color-selected: var(--pm-pink);
+}
+
+.tab-selected ion-icon {
+  /* Relleno degradado (truco con texto) */
+  color: var(--pm-pink);
+  filter: drop-shadow(0 4px 10px rgba(228, 0, 124, 0.4));
+}
+
+.tab-selected ion-label {
+  color: var(--pm-purple);
+  font-weight: 800;
+}

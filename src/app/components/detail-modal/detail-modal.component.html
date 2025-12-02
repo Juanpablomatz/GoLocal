@@ -1,9 +1,12 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="end">
+      <!-- BOTÓN CERRAR (Imagen) -->
       <ion-button (click)="close()">
-        <!-- Usamos tu imagen en lugar del icono -->
-        <img src="assets/icon/close.png" style="width: 30px; height: 30px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));">
+        <img src="/assets/icon/close.png" 
+             alt="X" 
+             style="width: 30px; height: 30px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));"
+             onerror="this.parentElement.innerText='❌'"/>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -11,18 +14,19 @@
 
 <ion-content class="modal-content">
   
-  <!-- IMAGEN PRINCIPAL -->
+  <!-- FOTO PRINCIPAL -->
   <div class="modal-media" *ngIf="data">
-    <!-- Aquí cargará directo de tu carpeta assets/lugares/... -->
     <img 
       [src]="data.imagen" 
+      [alt]="data.titulo" 
       class="hero-image"
+      onerror="this.src='assets/logo.jpeg'"
     />
     <div class="overlay-gradient"></div>
     <h2 class="hero-title">{{ data.titulo }}</h2>
   </div>
   
-  <!-- INFORMACIÓN -->
+  <!-- INFORMACIÓN DEL LUGAR -->
   <div class="modal-body" *ngIf="data">
     
     <div class="info-card">
@@ -30,21 +34,57 @@
       
       <div class="extra-info" *ngIf="data.ubicacion">
         <ion-icon name="location-outline"></ion-icon>
-        <p class="small">{{ data.ubicacion.direccion }}</p>
+        <span class="small">{{ data.ubicacion.direccion }}</span>
       </div>
     </div>
 
     <hr class="divider">
 
-    <!-- AQUÍ PUEDES DEJAR LO DE LAS RESEÑAS O QUITARLO SI PREFIEREN -->
+    <!-- SECCIÓN DE RESEÑAS CON ESTILO NUEVO -->
     <div class="reviews-section">
-      <h3>Reseñas</h3>
+      <h3 style="color: #333; margin: 0 0 10px 0; font-weight: 700;">Opiniones</h3>
+      
+      <!-- CAJA DE RESEÑA BONITA -->
+      <div class="add-review-box">
+        <p class="review-label">Califica tu experiencia</p>
+        
+        <!-- Estrellas Animadas -->
+        <div class="stars-input">
+          <ion-icon 
+            *ngFor="let s of starsArray" 
+            [name]="s <= newRating ? 'star' : 'star-outline'" 
+            (click)="setRating(s)">
+          </ion-icon>
+        </div>
+        
+        <!-- Área de Texto Suave -->
+        <ion-textarea 
+          [(ngModel)]="newComment" 
+          placeholder="¿Qué te pareció este lugar? Cuéntanos..."
+          class="custom-textarea"
+          rows="4">
+        </ion-textarea>
+        
+        <!-- Botón con Degradado -->
+        <ion-button expand="block" class="publish-btn" (click)="addReview()">
+          Publicar Reseña ✨
+        </ion-button>
+      </div>
+
+      <!-- LISTA DE RESEÑAS ANTERIORES -->
       <div class="reviews-list">
         <div class="review-item" *ngFor="let review of data['reseñas']">
-          <p><strong>{{ review.user || 'Usuario' }}</strong>: {{ review.comment }}</p>
+          <div class="review-header">
+            <span class="user-name">{{ review.user || 'Usuario' }}</span>
+            <div class="stars-display">
+              <ion-icon name="star" *ngFor="let i of [].constructor(review.stars || 0)" class="yellow-star" style="color: #FFC107; font-size: 0.9rem;"></ion-icon>
+            </div>
+          </div>
+          <p class="review-text">"{{ review.comment }}"</p>
         </div>
+        
         <div *ngIf="!data['reseñas'] || data['reseñas'].length === 0" class="no-reviews">
-          <p>No hay reseñas aún.</p>
+          <p>Aún no hay reseñas. ¡Sé el primero!</p>
         </div>
       </div>
     </div>

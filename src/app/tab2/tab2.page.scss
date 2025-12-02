@@ -1,0 +1,22 @@
+/* Estilo para el contenedor del mapa */
+#mapId {
+  width: 100%;
+  height: 100%;
+}
+
+/* Quitamos el fondo cuadrado y el borde a los iconos personalizados */
+::ng-deep .custom-marker {
+  background: transparent;
+  border: none;
+}
+
+/* Estilo del Popup (la nubecita blanca al dar clic) */
+::ng-deep .leaflet-popup-content-wrapper {
+  border-radius: 15px;
+  font-family: 'Lato', sans-serif;
+}
+
+::ng-deep .leaflet-popup-content b {
+  color: #E4007C; /* Color rosa de Calvillo */
+  font-size: 1.1rem;
+}

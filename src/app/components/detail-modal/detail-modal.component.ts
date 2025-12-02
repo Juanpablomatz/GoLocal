@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController, ToastController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
+// 1. IMPORTAR LOS ICONOS Y EL REGISTRADOR
+import { addIcons } from 'ionicons';
+import { star, starOutline, locationOutline, closeCircle } from 'ionicons/icons';
+
 @Component({
   selector: 'app-detail-modal',
   templateUrl: './detail-modal.component.html',
@@ -21,10 +25,12 @@ export class DetailModalComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private toastCtrl: ToastController
-  ) { }
+  ) { 
+    // 2. REGISTRAR LOS ICONOS PARA QUE SE VEAN
+    addIcons({ star, starOutline, locationOutline, closeCircle });
+  }
 
   ngOnInit() {
-    // Si no existe la lista de reseñas en el objeto, la creamos
     if (!this.data['reseñas']) {
       this.data['reseñas'] = [];
     }
@@ -39,12 +45,13 @@ export class DetailModalComponent implements OnInit {
   }
 
   async addReview() {
-    // Validación simple
+    // Validación
     if (this.newComment.trim() === '' || this.newRating === 0) {
       const toast = await this.toastCtrl.create({
-        message: 'Por favor califica y escribe algo.',
-        duration: 2000,
-        color: 'warning'
+        message: '⚠️ Por favor selecciona estrellas y escribe un comentario.',
+        duration: 3000,
+        color: 'dark', // 3. CAMBIO DE COLOR: 'dark' (Negro) para que se lea bien
+        position: 'bottom'
       });
       toast.present();
       return;
@@ -56,17 +63,16 @@ export class DetailModalComponent implements OnInit {
       comment: this.newComment
     };
 
-    // Agregamos a la lista original (usando corchetes por la ñ)
     this.data['reseñas'].unshift(review);
 
-    // Limpiamos el formulario
     this.newComment = '';
     this.newRating = 0;
 
     const toast = await this.toastCtrl.create({
-      message: '¡Reseña publicada!',
+      message: '✅ ¡Reseña publicada!',
       duration: 2000,
-      color: 'success'
+      color: 'success', // Verde
+      position: 'bottom'
     });
     toast.present();
   }

@@ -97,3 +97,83 @@
 }
 
 .no-reviews { text-align: center; padding: 20px; opacity: 0.5; font-style: italic; }
+/* --- ESTILO TARJETA DE RESEÑA --- */
+
+.add-review-box {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 25px 20px;
+  margin-top: 20px;
+  /* Sombra suave para que flote */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.02);
+  text-align: center;
+}
+
+.review-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 15px;
+}
+
+/* Estrellas Doradas y Grandes */
+.stars-input {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  ion-icon {
+    font-size: 2.5rem;
+    color: #FFC107; /* Dorado */
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote */
+    
+    &:active {
+      transform: scale(1.4); /* Se hace grande al clic */
+    }
+  }
+}
+
+/* Caja de Texto Suave */
+.custom-textarea {
+  --background: #f7f8fa !important;
+  --color: #333 !important;
+  --placeholder-color: #999 !important;
+  --padding-start: 15px;
+  --padding-top: 15px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  min-height: 100px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+
+  /* Borde de color cuando escribes */
+  &.ion-focused {
+    border-color: var(--pm-pink);
+    --background: #fff !important;
+    box-shadow: 0 4px 12px rgba(228, 0, 124, 0.1);
+  }
+}
+
+/* Botón Vibrante */
+.publish-btn {
+  --background: linear-gradient(135deg, var(--pm-pink), var(--pm-purple));
+  --border-radius: 50px;
+  --box-shadow: 0 8px 16px rgba(146, 39, 143, 0.3);
+  height: 50px;
+  font-weight: 800;
+  font-family: var(--font-header);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  
+  /* Efecto al presionar */
+  &:active {
+    --transform: scale(0.98);
+  }
+}

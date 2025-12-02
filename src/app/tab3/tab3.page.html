@@ -1,30 +1,37 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Tu Ruta Ideal 📍</ion-title>
+    <ion-title style="font-weight: 800; color: #444;">Para Ti ❤️</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding" style="--background: #f4f5f8;">
   
-  <div class="header-section">
-    <h2>Hola, Viajero</h2>
-    <p>Basado en tus gustos: <br>
-      <span class="tag" *ngFor="let gusto of misIntereses">#{{gusto}} </span>
-    </p>
+  <!-- Tarjeta de Bienvenida -->
+  <div style="background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px;">
+    <h2 style="margin: 0; color: #E4007C; font-weight: 800;">¡Hola, Viajero!</h2>
+    <p style="color: #666; margin-top: 5px;">Creamos esta ruta basada en tus gustos:</p>
+    
+    <!-- Etiquetas de gustos -->
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+      <span *ngFor="let gusto of misIntereses" 
+            style="background: #eee; color: #555; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 700;">
+        #{{gusto}}
+      </span>
+    </div>
   </div>
 
-  <!-- Aquí usamos tu componente de lista para mostrar los resultados -->
-  <!-- Esto muestra los lugares que Python encontró -->
-  <div class="results-container">
-    <app-list-modal 
-      [categoryTitle]="'Recomendado para ti'" 
-      [items]="rutaSugerida">
-    </app-list-modal>
-  </div>
+  <h3 style="margin-left: 5px; font-weight: 700; color: #333;">Tu Ruta Sugerida:</h3>
 
-  <!-- Si no hay coincidencias -->
-  <div *ngIf="rutaSugerida.length === 0" class="empty-state">
-    <p>No encontramos lugares exactos para tus gustos hoy. 🐢</p>
+  <!-- LISTA DE RESULTADOS (Reusamos tu componente) -->
+  <app-list-modal 
+    [categoryTitle]="'Recomendaciones'" 
+    [items]="rutaSugerida">
+  </app-list-modal>
+
+  <!-- Si no encuentra nada -->
+  <div *ngIf="rutaSugerida.length === 0" style="text-align: center; margin-top: 40px; color: #999;">
+    <p>No encontramos coincidencias hoy. 🐢</p>
+    <p style="font-size: 0.8rem;">Prueba agregando etiquetas como "naturaleza" en Mongo.</p>
   </div>
 
 </ion-content>
